@@ -1,5 +1,5 @@
-// components/Modal.js
 import { useState } from 'react';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 const Modal = ({ imageUrl, alt, onClose }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,7 +23,11 @@ const Modal = ({ imageUrl, alt, onClose }) => {
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <button className="close" onClick={closeModal}>Close</button>
-            <img src={imageUrl} alt={alt} />
+            <TransformWrapper>
+              <TransformComponent>
+                <img src={imageUrl} alt={alt} />
+              </TransformComponent>
+            </TransformWrapper>
           </div>
         </div>
       )}
