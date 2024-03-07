@@ -3,6 +3,7 @@ import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 const Modal = ({ imageUrl, alt, onClose }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [zoomResetKey, setZoomResetKey] = useState(0); // Adiciona estado para controlar a redefinição do zoom
 
   const openModal = () => {
     setIsOpen(true);
@@ -11,6 +12,10 @@ const Modal = ({ imageUrl, alt, onClose }) => {
   const closeModal = () => {
     setIsOpen(false);
     onClose(); // Chama a função de fechamento passada como prop
+  }
+
+  const handleDoubleClick = () => {
+    setZoomResetKey(zoomResetKey + 1); // Incrementa a chave para redefinir o zoom
   }
 
   return (
@@ -24,6 +29,7 @@ const Modal = ({ imageUrl, alt, onClose }) => {
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <button className="close" onClick={closeModal}>Close</button>
             <TransformWrapper
+              key={zoomResetKey} // Adiciona a chave de redefinição do zoom
               defaultScale={1}
               defaultPositionX={0}
               defaultPositionY={0}
@@ -34,11 +40,9 @@ const Modal = ({ imageUrl, alt, onClose }) => {
               }}
             >
               {({ zoomIn, zoomOut, ...rest }) => (
-                <>
-                  <TransformComponent>
-                    <img src={imageUrl} alt={alt} />
-                  </TransformComponent>
-                </>
+                <TransformComponent>
+                  <img src={imageUrl} alt={alt} onDoubleClick={handleDoubleClick} />
+                </TransformComponent>
               )}
             </TransformWrapper>
           </div>
