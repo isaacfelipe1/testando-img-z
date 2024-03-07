@@ -23,10 +23,23 @@ const Modal = ({ imageUrl, alt, onClose }) => {
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <button className="close" onClick={closeModal}>Close</button>
-            <TransformWrapper>
-              <TransformComponent>
-                <img src={imageUrl} alt={alt} />
-              </TransformComponent>
+            <TransformWrapper
+              defaultScale={1}
+              defaultPositionX={0}
+              defaultPositionY={0}
+              options={{
+                limitToBounds: false,
+                minScale: 0.5,
+                maxScale: 3
+              }}
+            >
+              {({ zoomIn, zoomOut, ...rest }) => (
+                <>
+                  <TransformComponent>
+                    <img src={imageUrl} alt={alt} />
+                  </TransformComponent>
+                </>
+              )}
             </TransformWrapper>
           </div>
         </div>
@@ -49,6 +62,7 @@ const Modal = ({ imageUrl, alt, onClose }) => {
           background-color: white;
           padding: 20px;
           border-radius: 5px;
+          overflow: hidden; /* Garante que a imagem não ultrapasse o modal */
         }
 
         .close {
