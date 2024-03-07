@@ -1,4 +1,5 @@
 // components/Modal.js
+"use client";
 import { useState } from 'react';
 import { ReactSVGPanZoom } from 'react-zoom-pan-pinch';
 
