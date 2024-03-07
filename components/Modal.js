@@ -1,7 +1,5 @@
 // components/Modal.js
-"use client";
 import { useState } from 'react';
-import { ReactSVGPanZoom } from 'react-zoom-pan-pinch';
 
 const Modal = ({ imageUrl, alt, onClose }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +10,7 @@ const Modal = ({ imageUrl, alt, onClose }) => {
 
   const closeModal = () => {
     setIsOpen(false);
-    onClose();
+    onClose(); // Chama a função de fechamento passada como prop
   }
 
   return (
@@ -25,9 +23,7 @@ const Modal = ({ imageUrl, alt, onClose }) => {
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <button className="close" onClick={closeModal}>Close</button>
-            <ReactSVGPanZoom width={400} height={400} background="#ffffff">
-              <img src={imageUrl} alt={alt} width={400} height={400} />
-            </ReactSVGPanZoom>
+            <img src={imageUrl} alt={alt} />
           </div>
         </div>
       )}
@@ -55,6 +51,11 @@ const Modal = ({ imageUrl, alt, onClose }) => {
           position: absolute;
           top: 10px;
           right: 10px;
+        }
+
+        img {
+          max-width: 100%;
+          max-height: 80vh;
         }
       `}</style>
     </>
